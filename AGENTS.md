@@ -18,3 +18,5 @@ Avant de répondre à une demande transversale ou touchant un autre projet, cons
 - **💖 Mapp Store (`/Users/thomaslefevre/.t3/projects/mapp-store`)** :
   Dès qu'une application créée ou mise à jour **concerne son épouse Marie** (Pédiatrie/Infectiologie comme `BiblioMarie`, Vie de famille & couple comme `Agenda Famille`, `Resto en Amoureux`, `Voyages-Voyages`, `Photo Famille`, Émile & `AssMat`/Mabrouka, ou Jeux familiaux comme `DinoCiel`, `milTCG`, `QUIZ du 7TER`, `Monopoly`, `PokéQuiz`), vous **DEVEZ systématiquement l'ajouter et la mettre à jour AUSSI sur le Mapp Store** (`index.html`, `scripts/sync_projects.py`, `projects.json` dans `/Users/thomaslefevre/.t3/projects/mapp-store`) et pousser sur GitHub (`https://mrthomaslef.github.io/mapp-store/`).
 <!-- SUPER_AGENT_ROUTER_END -->
+
+
