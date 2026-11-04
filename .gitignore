@@ -1,0 +1,7 @@
+photos/
+videos/
+themes_organises/
+data/extracted_raw.json
+data/vision_analysis.json
+analyze_vision
+.DS_Store
