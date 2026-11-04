@@ -2,48 +2,48 @@
 <html lang="fr" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Famille Fontenay — Album & Mémoire WhatsApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0b0d11" />
+  <title>Famille Fontenay — Album</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0d11;
-      --bg-elevated: #12161f;
-      --bg-card: #171c28;
-      --bg-glass: rgba(18, 22, 31, 0.82);
+      --bg: #090b0f;
+      --bg-header: rgba(9, 11, 15, 0.86);
+      --bg-card: #141821;
+      --bg-pill: #181d28;
       --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(255, 255, 255, 0.18);
-      --text: #f3f4f6;
+      --text: #f9fafb;
       --text-muted: #9ca3af;
       --accent: #f59e0b;
-      --accent-soft: rgba(245, 158, 11, 0.14);
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+      --accent-soft: rgba(245, 158, 11, 0.16);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-top: env(safe-area-inset-top, 0px);
     }
 
     html.light {
-      --bg: #faf7f2;
-      --bg-elevated: #ffffff;
+      --bg: #f8f6f2;
+      --bg-header: rgba(248, 246, 242, 0.88);
       --bg-card: #ffffff;
-      --bg-glass: rgba(250, 247, 242, 0.86);
-      --border: rgba(15, 23, 42, 0.08);
-      --border-hover: rgba(15, 23, 42, 0.18);
-      --text: #1c1917;
-      --text-muted: #57534e;
+      --bg-pill: #ede9e0;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #18181b;
+      --text-muted: #71717a;
       --accent: #d97706;
-      --accent-soft: rgba(217, 119, 6, 0.12);
-      --shadow: 0 16px 32px -12px rgba(28, 25, 23, 0.1);
+      --accent-soft: rgba(217, 119, 6, 0.14);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -52,907 +52,653 @@
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      transition: background-color 0.25s ease, color 0.25s ease;
+      padding-bottom: calc(24px + var(--safe-bottom));
     }
 
-    /* Layout */
-    .app-shell {
-      display: grid;
-      grid-template-columns: 290px 1fr;
-      min-height: 100vh;
-    }
-
-    @media (max-width: 980px) {
-      .app-shell {
-        grid-template-columns: 1fr;
-      }
-      .sidebar {
-        position: static !important;
-        height: auto !important;
-        border-right: none !important;
-        border-bottom: 1px solid var(--border);
-      }
-    }
-
-    /* Sidebar */
-    .sidebar {
+    /* Sticky Compact Mobile-First Header */
+    .app-header {
       position: sticky;
       top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      background: var(--bg-elevated);
-      border-right: 1px solid var(--border);
-      padding: 24px 18px;
+      z-index: 40;
+      background: var(--bg-header);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding-top: var(--safe-top);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 14px 8px;
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 9px;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 0 6px;
+      gap: 9px;
+      min-width: 0;
     }
 
-    .brand-logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 13px;
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
       background: linear-gradient(135deg, #f59e0b, #ea580c);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.45);
+      font-size: 18px;
       flex-shrink: 0;
     }
 
-    .brand-title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 26px;
-      line-height: 1.05;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-    }
-
-    .brand-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .nav-section-title {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      padding: 0 10px;
-      margin-bottom: 6px;
-    }
-
-    .nav-list {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .nav-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 11px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 13.5px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.16s ease;
-      text-align: left;
-    }
-
-    .nav-btn:hover {
-      background: rgba(128, 128, 128, 0.08);
-    }
-
-    .nav-btn.active {
-      background: var(--accent-soft);
-      border-color: rgba(245, 158, 11, 0.35);
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .nav-btn-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .brand-text {
       min-width: 0;
     }
 
-    .nav-btn-label {
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .nav-badge {
+    .brand-count {
       font-size: 11.5px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 99px;
-      background: rgba(128, 128, 128, 0.13);
       color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       flex-shrink: 0;
     }
 
-    .nav-btn.active .nav-badge {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .mode-switch {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 11px;
-      background: rgba(128, 128, 128, 0.06);
-      border: 1px solid var(--border);
-      font-size: 12.5px;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .mode-switch input {
-      accent-color: var(--accent);
-      width: 15px;
-      height: 15px;
-      cursor: pointer;
-    }
-
-    /* Main Content */
-    .main-area {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    /* Top Header */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      background: var(--bg-glass);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 28px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .search-box {
-      position: relative;
-      flex: 1;
-      min-width: 240px;
-      max-width: 480px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 11px 16px 11px 40px;
+    .icon-btn {
+      height: 34px;
+      min-width: 34px;
+      padding: 0 10px;
       border-radius: 99px;
       border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 13.5px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .search-box input:focus {
-      border-color: var(--accent);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      pointer-events: none;
-      font-size: 14px;
-    }
-
-    .toolbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .pill-select, .action-btn {
-      padding: 9px 14px;
-      border-radius: 99px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
+      background: var(--bg-pill);
       color: var(--text);
       font-family: inherit;
       font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      transition: all 0.15s ease;
-    }
-
-    .pill-select:hover, .action-btn:hover {
-      border-color: var(--border-hover);
-    }
-
-    .action-btn.primary {
-      background: linear-gradient(135deg, #f59e0b, #ea580c);
-      color: #fff;
-      border: none;
-      font-weight: 600;
-    }
-
-    .action-btn.active {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    /* Hero Banner */
-    .content-body {
-      padding: 26px 28px 60px;
-    }
-
-    .hero-banner {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(14, 165, 233, 0.08));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px 28px;
-      margin-bottom: 26px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .hero-title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 36px;
-      font-weight: 400;
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-
-    .hero-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      max-width: 650px;
-      line-height: 1.5;
-    }
-
-    .stats-row {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 12px 18px;
-      border-radius: 14px;
-      min-width: 110px;
-      text-align: center;
-    }
-
-    .stat-val {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 28px;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .stat-lbl {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      margin-top: 4px;
-      font-weight: 500;
-    }
-
-    /* Theme Cards Bento Grid */
-    .themes-overview {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .theme-card {
-      position: relative;
-      height: 168px;
-      border-radius: 16px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
-      background: var(--bg-card);
-    }
-
-    .theme-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: var(--shadow);
-    }
-
-    .theme-card.selected {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .theme-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-      filter: brightness(0.78);
-    }
-
-    .theme-card:hover img {
-      transform: scale(1.06);
-    }
-
-    .theme-card-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.1) 100%);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      color: #fff;
-    }
-
-    .theme-card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .theme-card-icon {
-      font-size: 22px;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(8px);
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
       justify-content: center;
-    }
-
-    .theme-card-count {
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 99px;
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(8px);
-    }
-
-    .theme-card-title {
-      font-weight: 700;
-      font-size: 15px;
-      line-height: 1.25;
-      margin-bottom: 3px;
-    }
-
-    .theme-card-sub {
-      font-size: 11.5px;
-      color: rgba(255, 255, 255, 0.78);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* Filter Chips Bar */
-    .filter-summary-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .active-filter-title {
-      font-size: 18px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .year-pills {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .year-pill {
-      padding: 6px 13px;
-      border-radius: 99px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text-muted);
-      font-size: 12.5px;
-      font-weight: 600;
+      gap: 5px;
       cursor: pointer;
-      transition: all 0.15s;
     }
 
-    .year-pill.active {
+    .icon-btn.active {
       background: var(--accent);
       color: #fff;
       border-color: var(--accent);
     }
 
-    /* Photo Grid & Month Groups */
-    .month-group {
-      margin-bottom: 34px;
+    /* Collapsible Search & Filters Row */
+    .search-row {
+      display: none;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-row.open {
+      display: flex;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      height: 36px;
+      padding: 0 32px 0 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-pill);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-input-wrap input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-input-wrap .s-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .clear-search {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Horizontal Scrollable Theme Chips */
+    .chips-scroll {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 2px;
+      margin: 0 -14px;
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+
+    .chips-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .theme-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: var(--bg-pill);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .theme-chip .chip-count {
+      font-size: 11px;
+      opacity: 0.7;
+      font-weight: 500;
+    }
+
+    .theme-chip.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .theme-chip.active .chip-count {
+      opacity: 0.95;
+    }
+
+    /* Secondary Sub-filters (Years + Sort) */
+    .subbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      margin: 0 -14px;
+      padding: 2px 14px 0;
+    }
+
+    .subbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .year-chips {
+      display: flex;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .year-btn {
+      padding: 4px 10px;
+      border-radius: 99px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .year-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .sort-toggle {
+      padding: 4px 9px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-pill);
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 600;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    /* Main Gallery Container */
+    .gallery-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8px 2px 30px;
+    }
+
+    @media (min-width: 700px) {
+      .gallery-wrap {
+        padding: 16px 14px 40px;
+      }
+    }
+
+    .month-block {
+      margin-bottom: 18px;
     }
 
     .month-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
+      padding: 8px 12px 6px;
     }
 
     .month-title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 26px;
-      font-weight: 400;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
     }
 
-    .month-count {
-      font-size: 12.5px;
+    .month-sub {
+      font-size: 12px;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
+    /* Apple Photos / Google Photos style tight 3-col mobile grid */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
     }
 
-    .photo-grid.compact {
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
+    @media (min-width: 640px) {
+      .photo-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
     }
 
-    .photo-card {
+    @media (min-width: 960px) {
+      .photo-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+      }
+    }
+
+    .photo-cell {
       position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
       aspect-ratio: 1 / 1;
+      background: var(--bg-card);
+      overflow: hidden;
       cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      user-select: none;
     }
 
-    .photo-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--border-hover);
+    @media (min-width: 640px) {
+      .photo-cell {
+        border-radius: 10px;
+      }
     }
 
-    .photo-card img {
+    .photo-cell img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.35s ease;
     }
 
-    .photo-card:hover img {
-      transform: scale(1.04);
-    }
-
-    .photo-card-grad {
+    .cell-badges {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.2) 45%, transparent 100%);
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 11px;
-      color: #fff;
-    }
-
-    .photo-card:hover .photo-card-grad,
-    .photo-card.has-caption .photo-card-grad {
-      opacity: 1;
-    }
-
-    .photo-card-top {
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: flex-end;
+      pointer-events: none;
     }
 
-    .theme-mini-badge {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 99px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(6px);
-      font-weight: 600;
-    }
-
-    .fav-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(0, 0, 0, 0.55);
+    .cell-caption-dot {
+      background: rgba(0, 0, 0, 0.65);
       color: #fff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      transition: transform 0.15s;
-    }
-
-    .fav-btn:hover {
-      transform: scale(1.15);
-    }
-
-    .fav-btn.is-fav {
-      background: #ef4444;
-      color: #fff;
-    }
-
-    .photo-card-bottom {
-      font-size: 12px;
-    }
-
-    .photo-card-caption {
-      font-weight: 600;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 6px;
+      max-width: 100%;
+      white-space: nowrap;
       overflow: hidden;
-      margin-bottom: 3px;
+      text-overflow: ellipsis;
+      font-weight: 600;
     }
 
-    .photo-card-meta {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.75);
-      display: flex;
-      justify-content: space-between;
+    .cell-fav-indicator {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 12px;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8));
+      pointer-events: none;
     }
 
-    /* Lightbox Modal */
+    .load-more-box {
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    .load-more-btn {
+      width: 100%;
+      max-width: 320px;
+      padding: 13px 20px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Fullscreen Mobile-First Lightbox with Touch Swipe */
     .lightbox {
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: rgba(5, 7, 11, 0.94);
-      backdrop-filter: blur(16px);
+      background: #000;
       display: none;
-      grid-template-columns: 1fr 360px;
+      flex-direction: column;
+      justify-content: space-between;
+      touch-action: pan-y;
     }
 
     .lightbox.open {
-      display: grid;
+      display: flex;
     }
 
-    @media (max-width: 900px) {
-      .lightbox.open {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr auto;
-      }
-      .lb-sidebar {
-        max-height: 42vh;
-      }
+    .lb-topbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: calc(10px + var(--safe-top)) 14px 12px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+    }
+
+    .lb-meta-top {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lb-date {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .lb-sub {
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .lb-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lb-btn {
+      height: 36px;
+      min-width: 36px;
+      padding: 0 11px;
+      border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(20, 24, 33, 0.7);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .lb-stage {
-      position: relative;
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 28px;
-      min-width: 0;
-      min-height: 0;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
     .lb-stage img {
       max-width: 100%;
-      max-height: 90vh;
+      max-height: 100%;
       object-fit: contain;
-      border-radius: 10px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+      user-select: none;
+      -webkit-user-drag: none;
+      transition: transform 0.18s ease;
     }
 
-    .lb-nav {
+    .lb-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(18, 22, 31, 0.75);
+      background: rgba(0,0,0,0.5);
       color: #fff;
-      font-size: 20px;
-      cursor: pointer;
+      font-size: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.15s;
+      cursor: pointer;
     }
 
-    .lb-nav:hover {
-      background: var(--accent);
+    .lb-arrow.prev { left: 10px; }
+    .lb-arrow.next { right: 10px; }
+
+    @media (max-width: 640px) {
+      .lb-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        background: rgba(0,0,0,0.35);
+      }
     }
 
-    .lb-prev { left: 20px; }
-    .lb-next { right: 20px; }
-
-    .lb-top-controls {
+    /* Bottom Sheet Info inside Lightbox */
+    .lb-bottom {
       position: absolute;
-      top: 20px;
-      left: 24px;
-      right: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      pointer-events: none;
-    }
-
-    .lb-top-controls > * {
-      pointer-events: auto;
-    }
-
-    .lb-sidebar {
-      background: var(--bg-elevated);
-      border-left: 1px solid var(--border);
-      padding: 24px;
-      overflow-y: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 16px 14px calc(14px + var(--safe-bottom));
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.68) 70%, transparent 100%);
+      color: #fff;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 8px;
+      max-height: 42vh;
+      overflow-y: auto;
     }
 
     .lb-title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 26px;
-      line-height: 1.15;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.3;
     }
 
-    .lb-meta-row {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--text-muted);
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .tag-cloud {
+    .lb-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 5px;
     }
 
-    .tag-chip {
-      font-size: 12px;
-      padding: 4px 10px;
+    .lb-tag {
+      font-size: 11px;
+      padding: 3px 8px;
       border-radius: 99px;
-      background: rgba(128, 128, 128, 0.14);
-      color: var(--text);
-      font-weight: 500;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-weight: 600;
     }
 
-    .whatsapp-bubble-list {
+    .lb-wa-box {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 5px;
+      margin-top: 2px;
     }
 
-    .wa-bubble {
-      background: rgba(37, 211, 102, 0.1);
-      border: 1px solid rgba(37, 211, 102, 0.25);
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 12.5px;
-      line-height: 1.4;
+    .lb-wa-msg {
+      background: rgba(16, 185, 129, 0.18);
+      border-left: 3px solid #10b981;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.35;
     }
 
-    .wa-sender {
+    .lb-wa-author {
       font-weight: 700;
-      color: #10b981;
-      font-size: 11.5px;
-      margin-bottom: 2px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .load-more-wrap {
-      text-align: center;
-      margin-top: 28px;
+      color: #34d399;
+      margin-right: 6px;
     }
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-logo">📸</div>
-        <div>
-          <div class="brand-title">Famille Fontenay</div>
-          <div class="brand-sub">Mémoire WhatsApp • 2023–2026</div>
-        </div>
-      </div>
 
-      <div>
-        <div class="nav-section-title">Collections</div>
-        <div class="nav-list" id="nav-collections">
-          <button class="nav-btn active" data-theme="all">
-            <span class="nav-btn-left"><span>✨</span><span class="nav-btn-label">Toutes les photos</span></span>
-            <span class="nav-badge" id="badge-all">0</span>
-          </button>
-          <button class="nav-btn" data-theme="favorites">
-            <span class="nav-btn-left"><span>❤️</span><span class="nav-btn-label">Mes Favoris</span></span>
-            <span class="nav-badge" id="badge-favs">0</span>
-          </button>
-          <button class="nav-btn" data-theme="with_caption">
-            <span class="nav-btn-left"><span>💬</span><span class="nav-btn-label">Avec légende WhatsApp</span></span>
-            <span class="nav-badge" id="badge-captions">0</span>
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <div class="nav-section-title">Thèmes Organisés</div>
-        <div class="nav-list" id="nav-themes"></div>
-      </div>
-
-      <label class="mode-switch" title="Inclure aussi les photos associées secondairement au thème">
-        <input type="checkbox" id="toggle-inclusive" checked />
-        <span>Mode thématique élargi (multi-tags)</span>
-      </label>
-
-      <div>
-        <div class="nav-section-title">Membres (Oct 2025–2026)</div>
-        <div class="nav-list" id="nav-senders"></div>
-      </div>
-    </aside>
-
-    <!-- Main Area -->
-    <main class="main-area">
-      <header class="topbar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="search-input" placeholder="Rechercher un thème, message (ex: Émile, crabe, Yport, Corse, ski, golf, MamieSo)..." />
-        </div>
-        <div class="toolbar-actions">
-          <select id="sort-select" class="pill-select">
-            <option value="desc">Plus récentes d'abord</option>
-            <option value="asc">Chronologique (2023 → 2026)</option>
-            <option value="faces">Portraits & Groupes d'abord</option>
-          </select>
-          <button class="action-btn" id="btn-compact" title="Basculer la taille de la grille">⊞ Grille compacte</button>
-          <button class="action-btn primary" id="btn-slideshow">▶ Diaporama</button>
-          <button class="action-btn" id="btn-theme-mode" title="Mode Clair / Sombre">☀️ / 🌙</button>
-        </div>
-      </header>
-
-      <div class="content-body">
-        <!-- Hero -->
-        <section class="hero-banner">
-          <div>
-            <h1 class="hero-title" id="current-view-title">Album Famille Fontenay</h1>
-            <p class="hero-subtitle" id="current-view-subtitle">
-              Toutes les photos récupérées de la conversation WhatsApp « Famille fontenay », classées automatiquement par thème visuel (Apple Vision) et contexte des messages.
-            </p>
+  <!-- Compact Sticky Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="top-row">
+        <div class="brand">
+          <div class="brand-icon">📸</div>
+          <div class="brand-text">
+            <div class="brand-title" id="header-title">Famille Fontenay</div>
+            <div class="brand-count" id="header-count">1 432 photos</div>
           </div>
-          <div class="stats-row">
-            <div class="stat-card">
-              <div class="stat-val" id="stat-total">1 432</div>
-              <div class="stat-lbl">Photos extraites</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-val" id="stat-themes">8</div>
-              <div class="stat-lbl">Thèmes organisés</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-val" id="stat-filtered">1 432</div>
-              <div class="stat-lbl">Affichées</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Themes Bento Overview -->
-        <section class="themes-overview" id="themes-bento"></section>
-
-        <!-- Filter & Year Bar -->
-        <div class="filter-summary-bar">
-          <div class="active-filter-title" id="grid-section-label">Chronologie des souvenirs</div>
-          <div class="year-pills" id="year-pills"></div>
         </div>
-
-        <!-- Gallery Container -->
-        <div id="gallery-container"></div>
-
-        <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
-          <button class="action-btn primary" id="btn-load-more">Afficher plus de photos</button>
+        <div class="top-actions">
+          <button class="icon-btn" id="btn-search-toggle" title="Rechercher">🔍</button>
+          <button class="icon-btn" id="btn-slideshow" title="Diaporama">▶</button>
+          <button class="icon-btn" id="btn-theme-mode" title="Thème clair/sombre">☀️</button>
         </div>
       </div>
-    </main>
-  </div>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <div class="lb-stage">
-      <div class="lb-top-controls">
-        <span class="theme-mini-badge" id="lb-counter">1 / 100</span>
-        <div style="display:flex; gap:8px;">
-          <button class="action-btn" id="lb-fav-btn">🤍 Favori</button>
-          <a class="action-btn" id="lb-download" href="#" download>⬇ Télécharger</a>
-          <button class="action-btn" id="lb-close">✕ Fermer (Échap)</button>
+      <!-- Collapsible Search Bar -->
+      <div class="search-row" id="search-row">
+        <div class="search-input-wrap">
+          <span class="s-icon">🔍</span>
+          <input type="search" id="search-input" placeholder="Chercher (Émile, crabe, Yport, Corse, ski, golf...)" />
+          <button class="clear-search" id="btn-clear-search">✕</button>
         </div>
       </div>
-      <button class="lb-nav lb-prev" id="lb-prev">‹</button>
-      <img id="lb-img" src="" alt="" />
-      <button class="lb-nav lb-next" id="lb-next">›</button>
+
+      <!-- Horizontal Theme Pills (1-tap on mobile) -->
+      <div class="chips-scroll" id="theme-chips"></div>
+
+      <!-- Compact Year & Sort Bar -->
+      <div class="subbar">
+        <div class="year-chips" id="year-chips"></div>
+        <select class="sort-toggle" id="sort-select">
+          <option value="desc">↓ Récentes</option>
+          <option value="asc">↑ Anciennes</option>
+          <option value="faces">👨‍👩‍👧‍👦 Groupes</option>
+        </select>
+      </div>
     </div>
-    <aside class="lb-sidebar">
-      <div>
-        <div class="lb-title" id="lb-title">Titre</div>
-        <div style="font-size:12.5px; color:var(--accent); font-weight:600; margin-top:4px;" id="lb-theme-badge"></div>
+  </header>
+
+  <!-- Photo Grid -->
+  <main class="gallery-wrap">
+    <div id="gallery-container"></div>
+    <div class="load-more-box" id="load-more-wrap" style="display:none;">
+      <button class="load-more-btn" id="btn-load-more">Voir plus de photos</button>
+    </div>
+  </main>
+
+  <!-- Fullscreen Touch Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lb-topbar">
+      <div class="lb-meta-top">
+        <div class="lb-date" id="lb-date"></div>
+        <div class="lb-sub" id="lb-sub"></div>
       </div>
-      <div class="lb-meta-row">
-        <div>📅 <strong>Date :</strong> <span id="lb-date"></span></div>
-        <div>👤 <strong>Partagé par :</strong> <span id="lb-sender"></span></div>
-        <div>📐 <strong>Format :</strong> <span id="lb-dims"></span></div>
-        <div>📁 <strong>Fichier :</strong> <code id="lb-file" style="font-size:11px;"></code></div>
+      <div class="lb-actions">
+        <button class="lb-btn" id="lb-fav">🤍</button>
+        <a class="lb-btn" id="lb-dl" href="#" download>⬇</a>
+        <button class="lb-btn" id="lb-close">✕</button>
       </div>
-      <div>
-        <div class="nav-section-title" style="padding:0; margin-bottom:8px;">Tags Visuels Détectés</div>
-        <div class="tag-cloud" id="lb-tags"></div>
-      </div>
-      <div id="lb-wa-section">
-        <div class="nav-section-title" style="padding:0; margin-bottom:8px;">Contexte Conversation WhatsApp</div>
-        <div class="whatsapp-bubble-list" id="lb-messages"></div>
-      </div>
-    </aside>
+    </div>
+
+    <div class="lb-stage" id="lb-stage">
+      <button class="lb-arrow prev" id="lb-prev">‹</button>
+      <img id="lb-img" src="" alt="" />
+      <button class="lb-arrow next" id="lb-next">›</button>
+    </div>
+
+    <div class="lb-bottom" id="lb-bottom">
+      <div class="lb-title" id="lb-title"></div>
+      <div class="lb-tags" id="lb-tags"></div>
+      <div class="lb-wa-box" id="lb-wa-box"></div>
+    </div>
   </div>
 
   <script src="data/catalog.js"></script>
@@ -962,18 +708,25 @@
       if (!catalog) return;
 
       const MONTHS_FR = ["", "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+      const SHORT_THEME_NAMES = {
+        "emile": "Émile",
+        "mer_vacances": "Mer & Corse",
+        "nature_balades": "Jardin & Ferme",
+        "maison_cocooning": "Maison",
+        "famille_fetes": "Fêtes & Famille",
+        "repas_gastronomie": "À Table",
+        "montagne_sport": "Ski & Sport",
+        "souvenirs_docs": "Souvenirs"
+      };
+
       const themeMap = {};
       catalog.themes.forEach(t => { themeMap[t.id] = t; });
 
-      // State
       let state = {
         theme: "all",
         year: "all",
-        sender: "all",
         search: "",
         sort: "desc",
-        inclusive: true,
-        compact: false,
         limit: 180,
         filtered: [],
         lbIndex: -1,
@@ -983,104 +736,55 @@
 
       function saveFavs() {
         localStorage.setItem("ff_favorites", JSON.stringify([...state.favorites]));
-        document.getElementById("badge-favs").textContent = state.favorites.size;
       }
 
-      // Initialize Sidebar & Bento
-      function initUI() {
-        document.getElementById("stat-total").textContent = catalog.total_photos.toLocaleString("fr-FR");
-        document.getElementById("badge-all").textContent = catalog.total_photos;
-        document.getElementById("badge-favs").textContent = state.favorites.size;
-        const captionCount = catalog.photos.filter(p => p.caption || (p.nearby_messages && p.nearby_messages.length > 0)).length;
-        document.getElementById("badge-captions").textContent = captionCount;
+      function renderControls() {
+        // Theme chips
+        const chipsEl = document.getElementById("theme-chips");
+        chipsEl.innerHTML = "";
 
-        // Themes sidebar & bento
-        const navThemes = document.getElementById("nav-themes");
-        const bento = document.getElementById("themes-bento");
-        navThemes.innerHTML = "";
-        bento.innerHTML = "";
+        const baseChips = [
+          { id: "all", icon: "✨", label: "Tout", count: catalog.total_photos },
+          ...catalog.themes.map(t => ({
+            id: t.id,
+            icon: t.icon,
+            label: SHORT_THEME_NAMES[t.id] || t.title.split("—")[0].trim(),
+            count: t.total_associated
+          })),
+          { id: "with_caption", icon: "💬", label: "Messages", count: catalog.photos.filter(p => p.caption || (p.nearby_messages && p.nearby_messages.length > 0)).length },
+          { id: "favorites", icon: "❤️", label: "Favoris", count: state.favorites.size }
+        ];
 
-        catalog.themes.forEach(t => {
-          const count = state.inclusive ? t.total_associated : t.count;
+        baseChips.forEach(c => {
           const btn = document.createElement("button");
-          btn.className = "nav-btn" + (state.theme === t.id ? " active" : "");
-          btn.dataset.theme = t.id;
-          btn.innerHTML = `
-            <span class="nav-btn-left"><span>${t.icon}</span><span class="nav-btn-label">${t.title}</span></span>
-            <span class="nav-badge">${count}</span>
-          `;
-          btn.onclick = () => selectTheme(t.id);
-          navThemes.appendChild(btn);
-
-          const card = document.createElement("div");
-          card.className = "theme-card" + (state.theme === t.id ? " selected" : "");
-          card.dataset.theme = t.id;
-          card.innerHTML = `
-            <img src="${t.cover}" alt="${t.title}" loading="lazy" />
-            <div class="theme-card-overlay">
-              <div class="theme-card-top">
-                <span class="theme-card-icon">${t.icon}</span>
-                <span class="theme-card-count">${count} photos</span>
-              </div>
-              <div>
-                <div class="theme-card-title">${t.title}</div>
-                <div class="theme-card-sub">${t.subtitle}</div>
-              </div>
-            </div>
-          `;
-          card.onclick = () => selectTheme(state.theme === t.id ? "all" : t.id);
-          bento.appendChild(card);
+          btn.className = "theme-chip" + (state.theme === c.id ? " active" : "");
+          btn.innerHTML = `<span>${c.icon}</span><span>${c.label}</span><span class="chip-count">${c.count}</span>`;
+          btn.onclick = () => {
+            state.theme = (state.theme === c.id && c.id !== "all") ? "all" : c.id;
+            state.limit = 180;
+            renderControls();
+            applyFilters();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          };
+          chipsEl.appendChild(btn);
         });
 
-        // Senders sidebar
-        const navSenders = document.getElementById("nav-senders");
-        navSenders.innerHTML = "";
-        Object.entries(catalog.senders).forEach(([sender, cnt]) => {
-          if (sender === "Famille Fontenay") return;
-          const btn = document.createElement("button");
-          btn.className = "nav-btn" + (state.sender === sender ? " active" : "");
-          btn.innerHTML = `
-            <span class="nav-btn-left"><span>👤</span><span class="nav-btn-label">${sender}</span></span>
-            <span class="nav-badge">${cnt}</span>
-          `;
-          btn.onclick = () => {
-            state.sender = state.sender === sender ? "all" : sender;
+        // Year chips
+        const yearEl = document.getElementById("year-chips");
+        yearEl.innerHTML = "";
+        const years = ["all", ...Object.keys(catalog.years).reverse()];
+        years.forEach(yr => {
+          const b = document.createElement("button");
+          b.className = "year-btn" + (state.year === yr ? " active" : "");
+          b.textContent = yr === "all" ? "Toutes" : yr;
+          b.onclick = () => {
+            state.year = (state.year === yr && yr !== "all") ? "all" : yr;
             state.limit = 180;
-            initUI();
+            renderControls();
             applyFilters();
           };
-          navSenders.appendChild(btn);
+          yearEl.appendChild(b);
         });
-
-        // Years pills
-        const yearPills = document.getElementById("year-pills");
-        yearPills.innerHTML = "";
-        const allYr = document.createElement("button");
-        allYr.className = "year-pill" + (state.year === "all" ? " active" : "");
-        allYr.textContent = "Toutes les années";
-        allYr.onclick = () => { state.year = "all"; state.limit = 180; initUI(); applyFilters(); };
-        yearPills.appendChild(allYr);
-
-        Object.entries(catalog.years).reverse().forEach(([yr, cnt]) => {
-          const yp = document.createElement("button");
-          yp.className = "year-pill" + (state.year === yr ? " active" : "");
-          yp.textContent = `${yr} (${cnt})`;
-          yp.onclick = () => { state.year = state.year === yr ? "all" : yr; state.limit = 180; initUI(); applyFilters(); };
-          yearPills.appendChild(yp);
-        });
-
-        // Collection buttons
-        document.querySelectorAll("#nav-collections .nav-btn").forEach(btn => {
-          btn.classList.toggle("active", state.theme === btn.dataset.theme);
-          btn.onclick = () => selectTheme(btn.dataset.theme);
-        });
-      }
-
-      function selectTheme(tid) {
-        state.theme = tid;
-        state.limit = 180;
-        initUI();
-        applyFilters();
       }
 
       function applyFilters() {
@@ -1091,15 +795,10 @@
           } else if (state.theme === "with_caption") {
             if (!p.caption && (!p.nearby_messages || p.nearby_messages.length === 0)) return false;
           } else if (state.theme !== "all") {
-            if (state.inclusive) {
-              if (!p.themes || !p.themes.includes(state.theme)) return false;
-            } else {
-              if (p.theme !== state.theme) return false;
-            }
+            if (!p.themes || !p.themes.includes(state.theme)) return false;
           }
 
           if (state.year !== "all" && p.year !== state.year) return false;
-          if (state.sender !== "all" && p.sender !== state.sender) return false;
 
           if (q) {
             const hay = [
@@ -1124,24 +823,7 @@
         }
 
         state.filtered = list;
-        document.getElementById("stat-filtered").textContent = list.length.toLocaleString("fr-FR");
-
-        // Update hero title
-        if (themeMap[state.theme]) {
-          const tm = themeMap[state.theme];
-          document.getElementById("current-view-title").textContent = `${tm.icon} ${tm.title}`;
-          document.getElementById("current-view-subtitle").textContent = `${tm.subtitle} — Dossier local : themes_organises/${tm.folder}`;
-        } else if (state.theme === "favorites") {
-          document.getElementById("current-view-title").textContent = "❤️ Mes Photos Favorites";
-          document.getElementById("current-view-subtitle").textContent = "Vos photos coup de cœur sélectionnées dans l'album familial.";
-        } else if (state.theme === "with_caption") {
-          document.getElementById("current-view-title").textContent = "💬 Photos commentées sur WhatsApp";
-          document.getElementById("current-view-subtitle").textContent = "Photos accompagnées d'une légende ou d'une discussion directe dans le groupe Famille fontenay.";
-        } else {
-          document.getElementById("current-view-title").textContent = "Album Famille Fontenay";
-          document.getElementById("current-view-subtitle").textContent = "Toutes les photos récupérées de la conversation WhatsApp « Famille fontenay », classées automatiquement par thème visuel et contexte des messages.";
-        }
-
+        document.getElementById("header-count").textContent = `${list.length.toLocaleString("fr-FR")} photo${list.length > 1 ? "s" : ""}`;
         renderGallery();
       }
 
@@ -1151,15 +833,14 @@
 
         const visible = state.filtered.slice(0, state.limit);
         if (visible.length === 0) {
-          container.innerHTML = `<div style="padding:60px; text-align:center; color:var(--text-muted);">Aucune photo ne correspond à ces critères.</div>`;
+          container.innerHTML = `<div style="padding:60px 20px; text-align:center; color:var(--text-muted); font-size:14px;">Aucune photo trouvée.</div>`;
           document.getElementById("load-more-wrap").style.display = "none";
           return;
         }
 
-        // Group by month
         const groups = new Map();
         visible.forEach((p, idx) => {
-          p._filteredIdx = idx;
+          p._idx = idx;
           if (!groups.has(p.month)) groups.set(p.month, []);
           groups.get(p.month).push(p);
         });
@@ -1168,61 +849,39 @@
           const [y, m] = monthStr.split("-");
           const mLabel = `${MONTHS_FR[parseInt(m, 10)]} ${y}`;
 
-          const sec = document.createElement("section");
-          sec.className = "month-group";
-          sec.innerHTML = `
+          const block = document.createElement("section");
+          block.className = "month-block";
+          block.innerHTML = `
             <div class="month-header">
-              <h2 class="month-title">${mLabel}</h2>
-              <span class="month-count">${items.length} photo${items.length > 1 ? "s" : ""}</span>
+              <div class="month-title">${mLabel}</div>
+              <div class="month-sub">${items.length}</div>
             </div>
           `;
 
           const grid = document.createElement("div");
-          grid.className = "photo-grid" + (state.compact ? " compact" : "");
+          grid.className = "photo-grid";
 
           items.forEach(p => {
-            const tmeta = themeMap[p.theme] || { icon: "📷", title: "Famille" };
+            const cell = document.createElement("div");
+            cell.className = "photo-cell";
             const isFav = state.favorites.has(p.id);
-            const card = document.createElement("div");
-            card.className = "photo-card" + (p.caption ? " has-caption" : "");
-            card.innerHTML = `
-              <img src="${p.thumb}" alt="${p.title}" loading="lazy" />
-              <div class="photo-card-grad">
-                <div class="photo-card-top">
-                  <span class="theme-mini-badge">${tmeta.icon} ${tmeta.title.split("—")[0].trim()}</span>
-                  <button class="fav-btn ${isFav ? "is-fav" : ""}" title="Ajouter aux favoris">♥</button>
-                </div>
-                <div class="photo-card-bottom">
-                  <div class="photo-card-caption">${p.caption || p.title}</div>
-                  <div class="photo-card-meta">
-                    <span>${p.date.split("-").reverse().join("/")}</span>
-                    <span>${p.sender !== "Famille Fontenay" ? p.sender.split(" ")[0] : ""}</span>
-                  </div>
-                </div>
-              </div>
+            cell.innerHTML = `
+              <img src="${p.thumb}" alt="" loading="lazy" />
+              ${isFav ? `<span class="cell-fav-indicator">❤️</span>` : ""}
+              ${p.caption ? `<div class="cell-badges"><span class="cell-caption-dot">💬 ${p.caption}</span></div>` : ""}
             `;
-
-            const favBtn = card.querySelector(".fav-btn");
-            favBtn.onclick = (e) => {
-              e.stopPropagation();
-              if (state.favorites.has(p.id)) state.favorites.delete(p.id);
-              else state.favorites.add(p.id);
-              saveFavs();
-              favBtn.classList.toggle("is-fav", state.favorites.has(p.id));
-            };
-
-            card.onclick = () => openLightbox(p._filteredIdx);
-            grid.appendChild(card);
+            cell.onclick = () => openLightbox(p._idx);
+            grid.appendChild(cell);
           });
 
-          sec.appendChild(grid);
-          container.appendChild(sec);
+          block.appendChild(grid);
+          container.appendChild(block);
         });
 
         const loadMoreWrap = document.getElementById("load-more-wrap");
         if (state.filtered.length > state.limit) {
           loadMoreWrap.style.display = "block";
-          document.getElementById("btn-load-more").textContent = `Afficher la suite (${state.filtered.length - state.limit} photos restantes)`;
+          document.getElementById("btn-load-more").textContent = `Afficher plus (${state.filtered.length - state.limit} restantes)`;
         } else {
           loadMoreWrap.style.display = "none";
         }
@@ -1235,60 +894,59 @@
         const p = state.filtered[idx];
         const lb = document.getElementById("lightbox");
         lb.classList.add("open");
+        document.body.style.overflow = "hidden";
 
         const lbImg = document.getElementById("lb-img");
         lbImg.onerror = () => {
           if (lbImg.src !== p.thumb) lbImg.src = p.thumb;
         };
-        lbImg.src = p.path;
-        document.getElementById("lb-counter").textContent = `${idx + 1} / ${state.filtered.length}`;
-        document.getElementById("lb-title").textContent = p.caption || p.title;
+        lbImg.src = window.location.hostname.includes("github.io") ? p.thumb : p.path;
+
         const tm = themeMap[p.theme];
-        document.getElementById("lb-theme-badge").textContent = tm ? `${tm.icon} ${tm.title}` : "";
-        document.getElementById("lb-date").textContent = `${p.date.split("-").reverse().join("/")} à ${p.time}`;
-        document.getElementById("lb-sender").textContent = p.sender;
-        document.getElementById("lb-dims").textContent = `${p.width} × ${p.height} px (${Math.round(p.size / 1024)} Ko)`;
-        document.getElementById("lb-file").textContent = p.filename;
-        document.getElementById("lb-download").href = window.location.hostname.includes("github.io") ? p.thumb : p.path;
-        document.getElementById("lb-download").download = p.filename;
+        document.getElementById("lb-date").textContent = `${p.date.split("-").reverse().join("/")} • ${p.time}`;
+        document.getElementById("lb-sub").textContent = `${idx + 1}/${state.filtered.length} • ${tm ? tm.icon + " " + (SHORT_THEME_NAMES[p.theme] || tm.title) : ""}`;
+        document.getElementById("lb-title").textContent = p.caption || p.title;
 
         const isFav = state.favorites.has(p.id);
-        document.getElementById("lb-fav-btn").textContent = isFav ? "❤️ Favori" : "🤍 Favori";
+        document.getElementById("lb-fav").textContent = isFav ? "❤️" : "🤍";
+
+        const dl = document.getElementById("lb-dl");
+        dl.href = window.location.hostname.includes("github.io") ? p.thumb : p.path;
+        dl.download = p.filename;
 
         // Tags
-        const tagContainer = document.getElementById("lb-tags");
-        tagContainer.innerHTML = "";
-        (p.tags || []).forEach(t => {
-          const span = document.createElement("span");
-          span.className = "tag-chip";
-          span.textContent = t;
-          tagContainer.appendChild(span);
+        const tagsEl = document.getElementById("lb-tags");
+        tagsEl.innerHTML = "";
+        if (p.sender && p.sender !== "Famille Fontenay") {
+          const s = document.createElement("span");
+          s.className = "lb-tag";
+          s.textContent = "👤 " + p.sender;
+          tagsEl.appendChild(s);
+        }
+        (p.tags || []).slice(0, 4).forEach(t => {
+          const s = document.createElement("span");
+          s.className = "lb-tag";
+          s.textContent = t;
+          tagsEl.appendChild(s);
         });
 
-        // WhatsApp context
-        const msgContainer = document.getElementById("lb-messages");
-        msgContainer.innerHTML = "";
-        const msgs = p.nearby_messages || [];
-        if (p.caption) {
-          const b = document.createElement("div");
-          b.className = "wa-bubble";
-          b.innerHTML = `<div class="wa-sender"><span>${p.sender} (Légende)</span><span>Direct</span></div><div>${p.caption}</div>`;
-          msgContainer.appendChild(b);
-        }
+        // WhatsApp messages
+        const waBox = document.getElementById("lb-wa-box");
+        waBox.innerHTML = "";
+        const msgs = (p.nearby_messages || []).slice(0, 3);
         msgs.forEach(m => {
           if (m.text === p.caption) return;
-          const b = document.createElement("div");
-          b.className = "wa-bubble";
-          const delta = m.delta_min === 0 ? "Même minute" : (m.delta_min > 0 ? `+${m.delta_min} min` : `${m.delta_min} min`);
-          b.innerHTML = `<div class="wa-sender"><span>${m.sender}</span><span>${delta}</span></div><div>${m.text}</div>`;
-          msgContainer.appendChild(b);
+          const div = document.createElement("div");
+          div.className = "lb-wa-msg";
+          div.innerHTML = `<span class="lb-wa-author">${m.sender.split(" ")[0]}:</span>${m.text}`;
+          waBox.appendChild(div);
         });
-        document.getElementById("lb-wa-section").style.display = (p.caption || msgs.length > 0) ? "block" : "none";
       }
 
       function closeLightbox() {
         stopSlideshow();
         document.getElementById("lightbox").classList.remove("open");
+        document.body.style.overflow = "";
         state.lbIndex = -1;
       }
 
@@ -1296,67 +954,104 @@
         if (state.slideshowTimer) {
           clearInterval(state.slideshowTimer);
           state.slideshowTimer = null;
-          document.getElementById("btn-slideshow").textContent = "▶ Diaporama";
+          document.getElementById("btn-slideshow").classList.remove("active");
         }
       }
 
-      // Events
-      document.getElementById("search-input").addEventListener("input", (e) => {
+      // Touch swipe inside Lightbox
+      let touchStartX = 0;
+      let touchStartY = 0;
+      const stage = document.getElementById("lb-stage");
+      stage.addEventListener("touchstart", (e) => {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      stage.addEventListener("touchend", (e) => {
+        if (e.changedTouches.length === 1) {
+          const dx = e.changedTouches[0].clientX - touchStartX;
+          const dy = e.changedTouches[0].clientY - touchStartY;
+          if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+            if (dx < 0) document.getElementById("lb-next").click();
+            else document.getElementById("lb-prev").click();
+          } else if (dy > 80 && Math.abs(dy) > Math.abs(dx)) {
+            closeLightbox();
+          }
+        }
+      }, { passive: true });
+
+      // UI Events
+      const searchRow = document.getElementById("search-row");
+      const searchInput = document.getElementById("search-input");
+      const clearBtn = document.getElementById("btn-clear-search");
+
+      document.getElementById("btn-search-toggle").onclick = (e) => {
+        const isOpen = searchRow.classList.toggle("open");
+        e.currentTarget.classList.toggle("active", isOpen);
+        if (isOpen) searchInput.focus();
+      };
+
+      searchInput.oninput = (e) => {
         state.search = e.target.value;
+        clearBtn.style.display = state.search ? "block" : "none";
         state.limit = 180;
         applyFilters();
-      });
+      };
 
-      document.getElementById("sort-select").addEventListener("change", (e) => {
+      clearBtn.onclick = () => {
+        searchInput.value = "";
+        state.search = "";
+        clearBtn.style.display = "none";
+        applyFilters();
+      };
+
+      document.getElementById("sort-select").onchange = (e) => {
         state.sort = e.target.value;
         applyFilters();
-      });
+      };
 
-      document.getElementById("toggle-inclusive").addEventListener("change", (e) => {
-        state.inclusive = e.target.checked;
-        initUI();
-        applyFilters();
-      });
+      document.getElementById("btn-theme-mode").onclick = (e) => {
+        const isLight = document.documentElement.classList.toggle("light");
+        e.currentTarget.textContent = isLight ? "🌙" : "☀️";
+      };
 
-      document.getElementById("btn-compact").addEventListener("click", (e) => {
-        state.compact = !state.compact;
-        e.currentTarget.classList.toggle("active", state.compact);
-        renderGallery();
-      });
-
-      document.getElementById("btn-theme-mode").addEventListener("click", () => {
-        document.documentElement.classList.toggle("light");
-      });
-
-      document.getElementById("btn-load-more").addEventListener("click", () => {
+      document.getElementById("btn-load-more").onclick = () => {
         state.limit += 240;
         renderGallery();
-      });
+      };
 
-      document.getElementById("btn-slideshow").addEventListener("click", () => {
+      document.getElementById("btn-slideshow").onclick = (e) => {
         if (state.slideshowTimer) {
           stopSlideshow();
           return;
         }
         if (state.filtered.length === 0) return;
         if (state.lbIndex === -1) openLightbox(0);
-        document.getElementById("btn-slideshow").textContent = "⏸ Pause";
+        e.currentTarget.classList.add("active");
         state.slideshowTimer = setInterval(() => {
-          const next = (state.lbIndex + 1) % state.filtered.length;
-          openLightbox(next);
-        }, 3500);
-      });
+          openLightbox((state.lbIndex + 1) % state.filtered.length);
+        }, 3200);
+      };
 
       document.getElementById("lb-close").onclick = closeLightbox;
-      document.getElementById("lb-prev").onclick = () => openLightbox((state.lbIndex - 1 + state.filtered.length) % state.filtered.length);
-      document.getElementById("lb-next").onclick = () => openLightbox((state.lbIndex + 1) % state.filtered.length);
-      document.getElementById("lb-fav-btn").onclick = () => {
+      document.getElementById("lb-prev").onclick = (e) => {
+        e.stopPropagation();
+        openLightbox((state.lbIndex - 1 + state.filtered.length) % state.filtered.length);
+      };
+      document.getElementById("lb-next").onclick = (e) => {
+        e.stopPropagation();
+        openLightbox((state.lbIndex + 1) % state.filtered.length);
+      };
+      document.getElementById("lb-fav").onclick = () => {
         const p = state.filtered[state.lbIndex];
         if (!p) return;
         if (state.favorites.has(p.id)) state.favorites.delete(p.id);
         else state.favorites.add(p.id);
         saveFavs();
         openLightbox(state.lbIndex);
+        renderControls();
         renderGallery();
       };
 
@@ -1367,7 +1062,7 @@
         if (e.key === "ArrowRight") document.getElementById("lb-next").click();
       });
 
-      initUI();
+      renderControls();
       applyFilters();
     })();
   </script>
